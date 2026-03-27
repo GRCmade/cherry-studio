@@ -1,8 +1,10 @@
 import react from '@vitejs/plugin-react-swc'
 import { CodeInspectorPlugin } from 'code-inspector-plugin'
 import { defineConfig } from 'electron-vite'
-import { resolve } from 'path'
+import { copyFileSync, mkdirSync } from 'fs'
+import { dirname, resolve } from 'path'
 import { visualizer } from 'rollup-plugin-visualizer'
+import type { Plugin } from 'vite'
 
 // assert not supported by biome
 // import pkg from './package.json' assert { type: 'json' }
@@ -12,12 +14,47 @@ const visualizerPlugin = (type: 'renderer' | 'main') => {
   return process.env[`VISUALIZER_${type.toUpperCase()}`] ? [visualizer({ open: true })] : []
 }
 
+// Plugin to copy UI automation scripts to output directory
+const copyUIAutomationScripts = (): Plugin => {
+  return {
+    name: 'copy-ui-automation-scripts',
+    closeBundle() {
+      const scripts = [
+        {
+          src: 'src/main/mcpServers/ui-automation/platforms/macos-accessibility.swift',
+          dest: 'out/main/macos-accessibility.swift'
+        },
+        {
+          src: 'src/main/mcpServers/ui-automation/platforms/macos-window-manager.swift',
+          dest: 'out/main/macos-window-manager.swift'
+        },
+        {
+          src: 'src/main/mcpServers/ui-automation/platforms/windows-uiautomation.ps1',
+          dest: 'out/main/windows-uiautomation.ps1'
+        }
+      ]
+
+      for (const script of scripts) {
+        try {
+          const srcPath = resolve(__dirname, script.src)
+          const destPath = resolve(__dirname, script.dest)
+          mkdirSync(dirname(destPath), { recursive: true })
+          copyFileSync(srcPath, destPath)
+          console.log(`Copied ${script.src} to ${script.dest}`)
+        } catch (error) {
+          console.warn(`Failed to copy ${script.src}:`, error)
+        }
+      }
+    }
+  }
+}
+
 const isDev = process.env.NODE_ENV === 'development'
 const isProd = process.env.NODE_ENV === 'production'
 
 export default defineConfig({
   main: {
-    plugins: [...visualizerPlugin('main')],
+    plugins: [...visualizerPlugin('main'), copyUIAutomationScripts()],
     resolve: {
       alias: {
         '@main': resolve('src/main'),

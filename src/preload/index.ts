@@ -695,6 +695,11 @@ const api = {
     }> => ipcRenderer.invoke(IpcChannel.OpenClaw_CheckUpdate),
     performUpdate: (): Promise<OperationResult> => ipcRenderer.invoke(IpcChannel.OpenClaw_PerformUpdate)
   },
+  uiAutomation: {
+    checkPermissions: (): Promise<{ screenRecording: boolean; accessibility: boolean }> =>
+      ipcRenderer.invoke(IpcChannel.UIAutomation_CheckPermissions),
+    requestPermissions: (): Promise<void> => ipcRenderer.invoke(IpcChannel.UIAutomation_RequestPermissions)
+  },
   analytics: {
     trackTokenUsage: (data: TokenUsageData) => ipcRenderer.invoke(IpcChannel.Analytics_TrackTokenUsage, data)
   }

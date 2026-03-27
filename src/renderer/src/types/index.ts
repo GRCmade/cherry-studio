@@ -840,7 +840,8 @@ export const BuiltinMCPServerNames = {
   didiMCP: '@cherry/didi-mcp',
   browser: '@cherry/browser',
   nowledgeMem: '@cherry/nowledge-mem',
-  hub: '@cherry/hub'
+  hub: '@cherry/hub',
+  uiAutomation: '@cherry/ui-automation'
 } as const
 
 export type BuiltinMCPServerName = (typeof BuiltinMCPServerNames)[keyof typeof BuiltinMCPServerNames]
