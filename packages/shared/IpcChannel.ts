@@ -109,6 +109,12 @@ export enum IpcChannel {
   AgentToolPermission_Response = 'agent-tool-permission:response',
   AgentToolPermission_Result = 'agent-tool-permission:result',
 
+  // UI Automation
+  UIAutomation_Screenshot = 'ui-automation:screenshot',
+  UIAutomation_Click = 'ui-automation:click',
+  UIAutomation_CheckPermissions = 'ui-automation:check-permissions',
+  UIAutomation_RequestPermissions = 'ui-automation:request-permissions',
+
   //copilot
   Copilot_GetAuthMessage = 'copilot:get-auth-message',
   Copilot_GetCopilotToken = 'copilot:get-copilot-token',
