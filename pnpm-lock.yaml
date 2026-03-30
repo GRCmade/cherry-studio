@@ -11,6 +11,7 @@ overrides:
   minimatch@>=5.0.0 <5.1.7: 5.1.7
   minimatch@>=9.0.0 <9.0.6: 9.0.6
   minimatch@>=10.0.0 <10.2.1: 10.2.1
+  office-text-extractor>xlsx: npm:@e965/xlsx@^0.20.3
   '@smithy/types': 4.7.1
   '@codemirror/state': 6.5.4
   '@codemirror/view': 6.39.16
@@ -12644,12 +12645,6 @@ packages:
   xhr@2.6.0:
     resolution: {integrity: sha512-/eCGLb5rxjx5e3mF1A7s+pLlR6CGyqWN91fv1JgER5mVWg1MZmlhBvy9kjcsOdRk8RrIujotWyJamfyrp+WIcA==}
 
-  xlsx@https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz:
-    resolution: {tarball: https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz}
-    version: 0.20.2
-    engines: {node: '>=0.8'}
-    hasBin: true
-
   xml-js@1.6.11:
     resolution: {integrity: sha512-7rVi2KMfwfWFl+GpPg6m80IVMWXLRjO+PxTq7V2CDhoGak0wzYzFgUY2m4XJ47OGdXd8eLE8EmwfAmdjw7lC1g==}
     hasBin: true
@@ -23554,7 +23549,7 @@ snapshots:
       mammoth: 1.6.0
       pdf-parse: 1.1.1(patch_hash=4d737b8dcffcd1ebfe3cf9f14f433acb1a96a725d0ed5fcff764bf114c23ab7b)
       text-encoding: 0.7.0
-      xlsx: https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz
+      xlsx: '@e965/xlsx@0.20.3'
       xml2js: 0.6.2
     transitivePeerDependencies:
       - supports-color
@@ -26564,8 +26559,6 @@ snapshots:
       is-function: 1.0.2
       parse-headers: 2.0.6
       xtend: 4.0.2
-
-  xlsx@https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz: {}
 
   xml-js@1.6.11:
     dependencies:
