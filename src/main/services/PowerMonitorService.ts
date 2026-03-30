@@ -1,12 +1,17 @@
 import { loggerService } from '@logger'
 import { isLinux, isMac, isWin } from '@main/constant'
-import ElectronShutdownHandler from '@paymoapp/electron-shutdown-handler'
 import { BrowserWindow } from 'electron'
 import { powerMonitor } from 'electron'
 
 const logger = loggerService.withContext('PowerMonitorService')
 
 type ShutdownHandler = () => void | Promise<void>
+
+type ElectronShutdownHandlerModule = {
+  setWindowHandle(handle: Buffer): void
+  on(event: 'shutdown', listener: () => void | Promise<void>): void
+  releaseShutdown(): boolean
+}
 
 export class PowerMonitorService {
   private static instance: PowerMonitorService
@@ -71,22 +76,39 @@ export class PowerMonitorService {
    */
   private initWindowsShutdownHandler(): void {
     try {
+      const shutdownHandler = this.loadWindowsShutdownHandler()
+      if (!shutdownHandler) {
+        logger.warn('Windows shutdown handler addon unavailable, falling back to Electron powerMonitor')
+        this.initElectronPowerMonitor()
+        return
+      }
+
       const zeroMemoryWindow = new BrowserWindow({ show: false })
       // Set the window handle for the shutdown handler
-      ElectronShutdownHandler.setWindowHandle(zeroMemoryWindow.getNativeWindowHandle())
+      shutdownHandler.setWindowHandle(zeroMemoryWindow.getNativeWindowHandle())
 
       // Listen for shutdown event
-      ElectronShutdownHandler.on('shutdown', async () => {
+      shutdownHandler.on('shutdown', async () => {
         logger.info('System shutdown event detected (Windows)')
         // Execute all registered shutdown handlers
         await this.executeShutdownHandlers()
         // Release the shutdown block to allow the system to shut down
-        ElectronShutdownHandler.releaseShutdown()
+        shutdownHandler.releaseShutdown()
       })
 
       logger.info('Windows shutdown handler registered')
     } catch (error) {
       logger.error('Failed to initialize Windows shutdown handler', error as Error)
+    }
+  }
+
+  private loadWindowsShutdownHandler(): ElectronShutdownHandlerModule | null {
+    try {
+      const shutdownHandlerModule = require('@paymoapp/electron-shutdown-handler')
+      return shutdownHandlerModule.default ?? shutdownHandlerModule
+    } catch (error) {
+      logger.warn('Failed to load Windows shutdown handler addon', error as Error)
+      return null
     }
   }
 
