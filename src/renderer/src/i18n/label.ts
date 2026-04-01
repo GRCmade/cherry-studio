@@ -240,6 +240,7 @@ export const getShortcutLabel = (key: string): string => {
 }
 
 const selectionDescriptionKeyMap = {
+  linux: 'selection.settings.toolbar.trigger_mode.description_note.linux',
   mac: 'selection.settings.toolbar.trigger_mode.description_note.mac',
   windows: 'selection.settings.toolbar.trigger_mode.description_note.windows'
 } as const
@@ -346,6 +347,7 @@ export const getFileFieldLabel = (key: string): string => {
 }
 
 const builtInMcpDescriptionKeyMap: Record<BuiltinMCPServerName, string> = {
+  [BuiltinMCPServerNames.flomo]: 'settings.mcp.builtinServersDescriptions.flomo',
   [BuiltinMCPServerNames.mcpAutoInstall]: 'settings.mcp.builtinServersDescriptions.mcp_auto_install',
   [BuiltinMCPServerNames.memory]: 'settings.mcp.builtinServersDescriptions.memory',
   [BuiltinMCPServerNames.sequentialThinking]: 'settings.mcp.builtinServersDescriptions.sequentialthinking',

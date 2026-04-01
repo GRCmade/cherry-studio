@@ -3493,6 +3493,19 @@
           "windows": "Please enter the executable file name of the application, one per line, case insensitive, can be fuzzy matched. For example: chrome.exe, weixin.exe, Cherry Studio.exe, etc."
         }
       },
+      "linux": {
+        "compositor_incompatible": "Your desktop environment does not support the selection feature. Please switch to an X11 session for the full experience.",
+        "filter_warning_text": "Not available in Wayland session",
+        "input_group_fail": "Not granted, please run `sudo usermod -aG input $USER` and re-login",
+        "input_group_label": "input group permission: ",
+        "input_group_pass": "Granted",
+        "wayland_checklist_subtitle": "Ensure the following conditions are met to optimize the Wayland experience:",
+        "wayland_description": "You are in a Wayland session. Due to system limitations, the toolbar may only appear at the center of the screen instead of following the selected text on some desktop environments. It is recommended to switch to an X11 session for the full experience.",
+        "wayland_title": "Wayland Session Notice",
+        "xwayland_fail": "Not enabled, please launch Cherry Studio with the `--ozone-platform=x11` flag",
+        "xwayland_label": "XWayland mode: ",
+        "xwayland_pass": "Enabled"
+      },
       "search_modal": {
         "custom": {
           "name": {
@@ -3526,6 +3539,7 @@
           "ctrlkey_note": "After selection, hold down the Ctrl key to show the toolbar",
           "description": "The way to trigger the selection assistant and show the toolbar",
           "description_note": {
+            "linux": "If you have remapped modifier keys using tools like xmodmap or xremap, it may cause some applications to fail to select text.",
             "mac": "If you have remapped the ⌘ key using shortcuts or keyboard mapping tools, it may cause some applications to fail to select text.",
             "windows": "Some applications do not support selecting text with the Ctrl key. If you have remapped the Ctrl key using tools like AHK, it may cause some applications to fail to select text."
           },
@@ -4475,6 +4489,7 @@
         "dify_knowledge": "Dify's MCP server implementation provides a simple API to interact with Dify. Requires configuring the Dify Key",
         "fetch": "MCP server for retrieving URL web content",
         "filesystem": "A Node.js server implementing the Model Context Protocol (MCP) for file system operations. Requires configuration of directories allowed for access.",
+        "flomo": "Connect to flomo to quickly capture notes and ideas via AI. Requires flomo account authorization.",
         "mcp_auto_install": "Automatically install MCP service (beta)",
         "memory": "Persistent memory implementation based on a local knowledge graph. This enables the model to remember user-related information across different conversations. Requires configuring the MEMORY_FILE_PATH environment variable.",
         "no": "No description",
